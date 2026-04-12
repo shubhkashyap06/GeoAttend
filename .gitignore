@@ -30,3 +30,8 @@ node_modules/
 .npm
 # Note: frontend/env.js is intentionally committed — it only contains
 # frontend-public keys (Supabase anon, Gemini) that are safe to expose.
+
+# Tools & Distributions
+zig-windows-x86_64-*/
+zig-cache/
+zig-out/

@@ -1,4 +1,4 @@
-# 📍 GeoAttend — Geofenced Attendance Tracker
+# 📍 GEOATTEND
 
 A full-stack OODP project combining a **C++ OOP Backend** with a **modern Web Frontend**.
 

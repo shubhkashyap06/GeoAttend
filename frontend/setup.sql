@@ -1,5 +1,5 @@
 -- ============================================================
--- GeoAttend Supabase Schema  (v2 — class-wise attendance)
+-- GEOATTEND Supabase Schema  (v2 — class-wise attendance)
 -- Safe to re-run: uses IF NOT EXISTS + DROP POLICY IF EXISTS
 -- Run in: Supabase Dashboard → SQL Editor → New Query
 -- ============================================================

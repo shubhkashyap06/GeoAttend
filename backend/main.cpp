@@ -1,6 +1,6 @@
 /*
  * ============================================================
- * main.cpp — GeoAttend REST API Server (Crow Framework)
+ * main.cpp — GEOATTEND REST API Server (Crow Framework)
  *
  * Endpoints:
  *   POST /addStudent          — Register a new student
@@ -53,7 +53,7 @@ std::string getCurrentDate() {
 // ============================================================
 int main() {
   std::cout << "==============================\n";
-  std::cout << "  GeoAttend Server Starting  \n";
+  std::cout << "  GEOATTEND Server Starting  \n";
   std::cout << "==============================\n";
 
   // Initialize core systems
@@ -273,7 +273,7 @@ int main() {
   });
 
   // Start server on port 8080
-  std::cout << "[Server] GeoAttend running on http://localhost:8080\n";
+  std::cout << "[Server] GEOATTEND running on http://localhost:8080\n";
   app.port(8080).multithreaded().run();
 
   return 0;
