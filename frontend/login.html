@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>GeoAttend — Login</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: var(--bg-deep);
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px 28px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 24px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.02em;
+        }
+
+        .tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 24px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font);
+        }
+
+        .tab-btn.active {
+            background: var(--bg-hover);
+            color: var(--text);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: var(--text);
+            font-size: 0.92rem;
+            font-family: var(--font);
+            outline: none;
+            transition: var(--transition);
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--accent-3);
+            background: rgba(99, 102, 241, 0.06);
+        }
+
+        .form-group select option {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        /* Role Cards */
+        .role-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .role-card {
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        .role-card.selected {
+            border-color: var(--accent-1);
+            background: rgba(99, 102, 241, 0.08);
+            /* Using softer overlay for flat look */
+        }
+
+        .role-card .r-icon {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .role-card .r-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        /* Student fields section */
+        .student-only {
+            animation: slideIn 0.25s ease;
+        }
+
+        .section-divider {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: var(--text-subtle);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin: 16px 0 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .alert {
+            margin-bottom: 14px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 4px;
+            font-size: 1rem;
+            padding: 14px;
+        }
+    </style>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="auth-card">
+        <div class="auth-logo"><i data-lucide="map-pin" style="margin-right:8px; color:var(--accent);"></i> GeoAttend
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" id="tabSignIn" onclick="switchTab('signin')">Sign In</button>
+            <button class="tab-btn" id="tabSignUp" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+
+        <!-- SIGN IN FORM -->
+        <div id="signinForm">
+            <div id="signinAlert" class="alert"></div>
+
+            <!-- Role Selector for Sign In -->
+            <div class="form-group">
+                <label>I am a...</label>
+                <div class="role-row">
+                    <div class="role-card selected" id="siRoleStudent" onclick="selectSignInRole('student')">
+                        <div class="r-icon"><i data-lucide="graduation-cap"></i></div>
+                        <div class="r-name">Student</div>
+                    </div>
+                    <div class="role-card" id="siRoleTeacher" onclick="selectSignInRole('teacher')">
+                        <div class="r-icon"><i data-lucide="book-open"></i></div>
+                        <div class="r-name">Teacher</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="siEmail" placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="siPassword" placeholder="••••••••" />
+            </div>
+
+            <button class="btn btn-primary submit-btn" onclick="doSignIn()">
+                <span id="signinBtnText">Sign In</span>
+                <div class="spinner" id="signinSpinner"></div>
+            </button>
+        </div>
+
+        <!-- SIGN UP FORM -->
+        <div id="signupForm" style="display:none;">
+            <div id="signupAlert" class="alert"></div>
+
+            <!-- Role -->
+            <div class="form-group">
+                <label>I am a...</label>
+                <div class="role-row">
+                    <div class="role-card selected" id="roleStudent" onclick="selectRole('student')">
+                        <div class="r-icon"><i data-lucide="graduation-cap"></i></div>
+                        <div class="r-name">Student</div>
+                    </div>
+                    <div class="role-card" id="roleTeacher" onclick="selectRole('teacher')">
+                        <div class="r-icon"><i data-lucide="book-open"></i></div>
+                        <div class="r-name">Teacher</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Common fields -->
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="suName" placeholder="Arjun Jha" />
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" id="suEmail" placeholder="your@email.com" />
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" id="suPassword" placeholder="Min 6 characters" />
+            </div>
+
+            <!-- Student-only fields -->
+            <div id="studentFields" class="student-only">
+                <div class="section-divider">Student Details</div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Roll Number</label>
+                        <input type="text" id="suRoll" placeholder="e.g. 2201234" />
+                    </div>
+                    <div class="form-group">
+                        <label>Branch</label>
+                        <select id="suBranch">
+                            <option value="">Select Branch</option>
+                            <option value="CSE">CSE</option>
+                            <option value="IT">IT</option>
+                            <option value="ECE">ECE</option>
+                            <option value="EEE">EEE</option>
+                            <option value="ME">ME</option>
+                            <option value="CE">CE</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Class / Year</label>
+                        <select id="suClass">
+                            <option value="">Select Year</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Section</label>
+                        <input type="text" id="suSection" placeholder="e.g. E1, CS-2A, B2..." maxlength="20" />
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary submit-btn" onclick="doSignUp()">
+                <span id="signupBtnText">Create Account</span>
+                <div class="spinner" id="signupSpinner"></div>
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { signIn, signUp, getProfile } from './supabase-client.js';
+
+        let selectedRole = 'student';
+        let signinSelectedRole = 'student';
+
+        window.switchTab = (tab) => {
+            const isSignin = tab === 'signin';
+            document.getElementById('tabSignIn').className = 'tab-btn' + (isSignin ? ' active' : '');
+            document.getElementById('tabSignUp').className = 'tab-btn' + (!isSignin ? ' active' : '');
+            document.getElementById('signinForm').style.display = isSignin ? 'block' : 'none';
+            document.getElementById('signupForm').style.display = !isSignin ? 'block' : 'none';
+        };
+
+        window.selectSignInRole = (role) => {
+            signinSelectedRole = role;
+            document.getElementById('siRoleStudent').className = 'role-card' + (role === 'student' ? ' selected' : '');
+            document.getElementById('siRoleTeacher').className = 'role-card' + (role === 'teacher' ? ' selected' : '');
+        };
+
+        window.selectRole = (role) => {
+            selectedRole = role;
+            document.getElementById('roleStudent').className = 'role-card' + (role === 'student' ? ' selected' : '');
+            document.getElementById('roleTeacher').className = 'role-card' + (role === 'teacher' ? ' selected' : '');
+            document.getElementById('studentFields').style.display = role === 'student' ? 'block' : 'none';
+        };
+
+        window.doSignIn = async () => {
+            const email = document.getElementById('siEmail').value.trim();
+            const password = document.getElementById('siPassword').value;
+            if (!email || !password) { showAlert('signinAlert', 'error', 'Enter email and password.'); return; }
+
+            setBtnLoading('signinBtnText', 'signinSpinner', true, 'Signing in...');
+            try {
+                await signIn(email, password);
+                const profile = await getProfile();
+
+                if (profile?.role && profile.role !== signinSelectedRole) {
+                    showAlert('signinAlert', 'error', `Account is registered as a ${profile.role}. Redirecting...`);
+                    setTimeout(() => {
+                        window.location.href = profile.role === 'teacher' ? 'teacher.html' : 'student-dashboard.html';
+                    }, 1500);
+                    return;
+                }
+
+                window.location.href = profile?.role === 'teacher' ? 'teacher.html' : 'student-dashboard.html';
+            } catch (err) {
+                showAlert('signinAlert', 'error', err.message);
+                setBtnLoading('signinBtnText', 'signinSpinner', false, 'Sign In');
+            }
+        };
+
+        window.doSignUp = async () => {
+            const name = document.getElementById('suName').value.trim();
+            const email = document.getElementById('suEmail').value.trim();
+            const password = document.getElementById('suPassword').value;
+            if (!name || !email || !password) { showAlert('signupAlert', 'error', 'Fill in all required fields.'); return; }
+            if (password.length < 6) { showAlert('signupAlert', 'error', 'Password must be at least 6 characters.'); return; }
+
+            const extraInfo = selectedRole === 'student' ? {
+                rollNumber: document.getElementById('suRoll').value.trim(),
+                className: document.getElementById('suClass').value,
+                section: document.getElementById('suSection').value,
+                branch: document.getElementById('suBranch').value,
+            } : {};
+
+            setBtnLoading('signupBtnText', 'signupSpinner', true, 'Creating account...');
+            try {
+                await signUp(email, password, name, selectedRole, extraInfo);
+                showAlert('signupAlert', 'success', 'Account created! Check your email or sign in directly if email confirmation is disabled.');
+                setBtnLoading('signupBtnText', 'signupSpinner', false, 'Create Account');
+            } catch (err) {
+                showAlert('signupAlert', 'error', err.message);
+                setBtnLoading('signupBtnText', 'signupSpinner', false, 'Create Account');
+            }
+        };
+
+        function showAlert(id, type, msg) {
+            const el = document.getElementById(id);
+            el.className = `alert alert-${type} show`;
+            el.innerHTML = `<span></span><span>${msg}</span>`;
+        }
+
+        function setBtnLoading(textId, spinnerId, loading, text) {
+            document.getElementById(textId).textContent = text;
+            document.getElementById(spinnerId).className = loading ? 'spinner active' : 'spinner';
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

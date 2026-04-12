@@ -1,0 +1,11 @@
+{
+  "outputDirectory": "frontend",
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/dashboard", "destination": "/student-dashboard.html" },
+    { "source": "/teacher", "destination": "/teacher.html" },
+    { "source": "/profile", "destination": "/profile.html" },
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}

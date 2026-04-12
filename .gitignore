@@ -1,0 +1,32 @@
+# Build directories
+build/
+bin/
+obj/
+*.o
+*.out
+*.exe
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# SQLite database files (optional, but usually good to ignore in Git if they contain local test data)
+*.sqlite
+*.db
+*.sqlite3
+
+# Node/Frontend
+node_modules/
+.npm
+# Note: frontend/env.js is intentionally committed — it only contains
+# frontend-public keys (Supabase anon, Gemini) that are safe to expose.
