@@ -20,10 +20,7 @@ COPY . /app
 
 WORKDIR /app/backend
 
-# Step 1: Compile sqlite3.c as plain C (not C++)
-RUN gcc -c src/sqlite3.c -o sqlite3.o
-
-# Step 2: Compile all C++ sources + link with sqlite3.o
+# Compile all C++ sources and link against system libsqlite3
 RUN g++ -std=c++17 \
     -DASIO_STANDALONE \
     -DCROW_ENABLE_SSL=0 \
@@ -35,9 +32,9 @@ RUN g++ -std=c++17 \
     src/NotificationManager.cpp \
     src/Person.cpp \
     src/Student.cpp \
-    sqlite3.o \
     -I./include \
     -I/usr/include/asio \
+    -lsqlite3 \
     -lpthread \
     -o geoattend
 
