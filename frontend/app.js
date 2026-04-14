@@ -80,7 +80,7 @@ async function registerStudent() {
       showAlert('regAlertBox', 'error', data.error || 'Registration failed.');
     }
   } catch (err) {
-    showAlert('regAlertBox', 'error', 'Cannot connect to server. Make sure the C++ backend is running on port 8080.');
+    showAlert('regAlertBox', 'error', 'Cannot connect to server. Ensure the backend (' + API_BASE + ') is reachable.');
   }
 
   setLoading('regBtnText', 'regSpinner', false, 'Register');
@@ -148,7 +148,7 @@ async function sendAttendance(studentId, lat, lng) {
       showAlert('alertBox', 'error', data.message || data.error || 'Could not mark attendance.');
     }
   } catch (err) {
-    showAlert('alertBox', 'error', 'Cannot reach the backend server. Make sure GeoAttend C++ server is running on port 8080.');
+    showAlert('alertBox', 'error', 'Cannot connect to the backend server. Ensure it is running at ' + API_BASE);
   }
 
   setLoading('markBtnText', 'markSpinner', false, '🎯 Mark Attendance');

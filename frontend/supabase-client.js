@@ -16,6 +16,7 @@ export async function signUp(email, password, fullName, role, extraInfo = {}) {
     const { data, error } = await supabase.auth.signUp({
         email, password,
         options: {
+            emailRedirectTo: window.location.origin,
             data: {
                 full_name: fullName,
                 role,
